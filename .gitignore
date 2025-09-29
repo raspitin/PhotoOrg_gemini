@@ -1,0 +1,12 @@
+# Ambiente virtuale Python
+venv/
+
+# File di cache e compilati di Python
+__pycache__/
+*.pyc
+*.pyo
+*.class
+
+# File di log e database generati dall'applicazione
+*.log
+*.db
