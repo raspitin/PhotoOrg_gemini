@@ -1,0 +1,132 @@
+'# Hardware Auto-Detection Results': Generated on 2025-07-14 15:33:00
+'# Performance Expectations':
+  cpu_throughput: 104.18414716124055
+'# System Info':
+  configuration_mode: cpu
+  cpu_cores: 4
+  gpu_available: false
+  gpu_name: No GPU
+database: /mnt/ssd1tb/archivio_migrazione27082025.db
+database_config:
+  connection_timeout: 30
+  enable_wal_mode: true
+  vacuum_on_completion: true
+destination: /mnt/ssd1tb/Destinazione27082025/
+exclude_hidden_dirs: true
+exclude_patterns:
+- .DS_Store
+- Thumbs.db
+- desktop.ini
+- .git
+- .svn
+- __pycache__
+- node_modules
+- .tmp
+- .cache
+- '.20241031142920'
+- .AutoPortrait
+- .picasaoriginals
+- .@__thumb
+- .VirtualShot
+gpu_acceleration:
+  enabled: false
+  reason: GPU not available or not beneficial
+image_extensions:
+- .jpg
+- .jpeg
+- .png
+- .heic
+- .heif
+- .tiff
+- .tif
+- .bmp
+- .webp
+- .gif
+- .cr2
+- .cr3
+- .nef
+- .arw
+- .dng
+- .orf
+- .rw2
+log: /mnt/ssd1tb/log_migrazione27082025.txt
+parallel_processing:
+  cpu_multiplier: 1.0
+  max_workers: 4
+  max_workers_limit: 12
+performance_config:
+  batch_size: 100
+  buffer_size: 65536
+  hash_algorithm: sha256
+  memory_limit: 1073741824
+photographic_prefixes:
+- JPG
+- IMG_
+- MVI_
+- MVC
+- CAN_
+- MG
+- DSC_
+- NDC_
+- _DSC
+- DSC
+- ILCE-
+- HDR
+- MOV
+- DSCF
+- FUJI
+- _DSF
+- LUMIX_
+- OMD_
+- PENTX
+- LEICA_
+- GR_
+- SAM_
+- GOPR
+- GP_
+- DJI_
+- IMG-
+- PXL_
+- Screenshot_
+source: /mnt/Multimedia/
+supported_extensions:
+- .jpg
+- .jpeg
+- .png
+- .heic
+- .heif
+- .tiff
+- .tif
+- .bmp
+- .webp
+- .gif
+- .cr2
+- .cr3
+- .nef
+- .arw
+- .dng
+- .orf
+- .rw2
+- .mp4
+- .mov
+- .avi
+- .mkv
+- .m2t
+- .3gp
+- .wmv
+- .flv
+- .webm
+- .mpg
+- .mpeg
+video_extensions:
+- .mp4
+- .mov
+- .avi
+- .mkv
+- .m2t
+- .3gp
+- .wmv
+- .flv
+- .webm
+- .mpg
+- .mpeg

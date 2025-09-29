@@ -1,0 +1,64 @@
+# PhotoOrg v1.0.0 - Dependencies
+# Core dependencies for parallel photo/video organizer
+
+# Configuration and YAML parsing
+PyYAML>=5.4.1
+
+# Media metadata extraction  
+pymediainfo>=6.0.1
+
+# Progress bars and terminal UI
+tqdm>=4.64.1
+
+# System and file operations (built-in modules)
+# pathlib - Built-in with Python 3.4+
+# sqlite3 - Built-in with Python 3.0+
+# threading - Built-in
+# concurrent.futures - Built-in with Python 3.2+
+# multiprocessing - Built-in
+# hashlib - Built-in
+# shutil - Built-in
+# logging - Built-in
+# time - Built-in
+# os - Built-in
+
+# Optional performance and monitoring dependencies
+# Uncomment if needed for advanced features
+
+# System resource monitoring
+# psutil>=5.9.0
+
+# Memory profiling (development only)
+# memory-profiler>=0.60.0
+
+# Advanced date parsing (if needed)
+# python-dateutil>=2.8.2
+
+# Image processing (if EXIF extraction issues)
+# Pillow>=9.5.0
+
+# Additional hash algorithms (if needed)
+# hashlib-compat>=1.0.1
+
+# Database utilities (optional)
+# sqlite-utils>=3.30
+
+# Development and testing dependencies (optional)
+# pytest>=7.1.0
+# pytest-cov>=4.0.0
+# flake8>=5.0.0
+# black>=22.0.0
+
+# Performance testing (optional)  
+# pytest-benchmark>=4.0.0
+
+# NOTE: System dependencies required:
+# - python3-gi 
+# - gir1.2-gexiv2-0.10
+# - libgexiv2-dev
+# - mediainfo
+# - python3-dev
+# - python3-pip
+# - python3-venv
+#
+# Install with: sudo apt install python3-gi gir1.2-gexiv2-0.10 libgexiv2-dev mediainfo python3-dev python3-pip python3-venv

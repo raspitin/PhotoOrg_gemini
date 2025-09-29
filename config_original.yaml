@@ -1,0 +1,221 @@
+# PhotoOrg v1.1.0 - Configurazione con supporto Dry-Run
+# ========================================================
+
+# PERCORSI PRINCIPALI
+# -------------------
+# ATTENZIONE: Sorgente e destinazione NON devono mai coincidere!
+# Il sistema impedirà l'esecuzione se i percorsi sono identici.
+
+source: /home/andrea/Archivio_test/PHOTO_source        # Directory con foto/video da organizzare
+destination: /home/andrea/Archivio_test/OUT            # Directory di destinazione (DEVE essere diversa da source)
+database: /home/andrea/Archivio_test/archivio_migrazione.db  # Database SQLite per tracking
+log: /home/andrea/Archivio_test/log_migrazione.txt     # File di log
+
+# MODALITÀ DRY-RUN
+# ----------------
+# Usa: python3 PhotoOrg.py --dry-run
+# 
+# In modalità dry-run:
+# - I file vengono solo analizzati, non spostati
+# - Il database viene creato in memoria (:memory:)
+# - Vengono mostrate tutte le operazioni che verrebbero eseguite
+# - Perfetto per testare la configurazione prima dell'esecuzione reale
+# - Nessuna modifica ai file originali
+
+# CONFIGURAZIONE PROCESSING PARALLELO
+# -----------------------------------
+parallel_processing:
+  enabled: true                    # Abilita processing parallelo
+  max_workers: null               # null = auto-detect, oppure numero specifico (es. 8)
+  cpu_multiplier: 2               # Moltiplicatore CPU per I/O intensive tasks
+  max_workers_limit: 16           # Limite massimo worker per evitare overhead
+
+# CONFIGURAZIONE PERFORMANCE
+# --------------------------
+performance_config:
+  batch_size: 100                 # Dimensione batch per operazioni database
+  memory_limit: 1073741824        # Limite memoria in byte (1GB)
+  buffer_size: 65536              # Buffer lettura file (64KB)
+  hash_algorithm: sha256          # Algoritmo hash per duplicati
+
+# CONFIGURAZIONE DATABASE
+# -----------------------
+database_config:
+  vacuum_on_completion: true      # Ottimizza database al completamento
+  connection_timeout: 30          # Timeout connessione database (secondi)
+  enable_wal_mode: true          # Write-Ahead Logging per prestazioni
+
+# OPZIONI DI ESCLUSIONE
+# --------------------
+exclude_hidden_dirs: true         # Esclude directory che iniziano con '.'
+exclude_patterns:                 # Pattern aggiuntivi da escludere
+  - .DS_Store
+  - Thumbs.db
+  - desktop.ini
+  - .git
+  - .svn
+  - __pycache__
+  - node_modules
+  - .tmp
+  - .cache
+
+# ESTENSIONI SUPPORTATE
+# --------------------
+supported_extensions:
+  # Immagini comuni
+  - .jpg
+  - .jpeg
+  - .png
+  - .heic
+  - .heif
+  - .tiff
+  - .tif
+  - .bmp
+  - .webp
+  - .gif
+  
+  # Formati RAW
+  - .cr2      # Canon
+  - .cr3      # Canon
+  - .nef      # Nikon
+  - .arw      # Sony
+  - .dng      # Adobe
+  - .orf      # Olympus
+  - .rw2      # Panasonic
+  
+  # Video comuni
+  - .mp4
+  - .mov
+  - .avi
+  - .mkv
+  - .m2t
+  - .3gp
+  - .wmv
+  - .flv
+  - .webm
+  - .mpg
+  - .mpeg
+
+# ESTENSIONI PER TIPO
+# -------------------
+image_extensions:
+  - .jpg
+  - .jpeg
+  - .png
+  - .heic
+  - .heif
+  - .tiff
+  - .tif
+  - .bmp
+  - .webp
+  - .gif
+  - .cr2
+  - .cr3
+  - .nef
+  - .arw
+  - .dng
+  - .orf
+  - .rw2
+
+video_extensions:
+  - .mp4
+  - .mov
+  - .avi
+  - .mkv
+  - .m2t
+  - .3gp
+  - .wmv
+  - .flv
+  - .webm
+  - .mpg
+  - .mpeg
+
+# PREFISSI FOTOGRAFICI
+# -------------------
+# Prefissi per identificare file fotografici nei nomi
+photographic_prefixes:
+  - JPG
+  - IMG_
+  - MVI_
+  - MVC
+  - CAN_
+  - MG
+  - DSC_
+  - NDC_
+  - _DSC
+  - DSC
+  - ILCE-
+  - HDR
+  - MOV
+  - DSCF
+  - FUJI
+  - _DSF
+  - LUMIX_
+  - OMD_
+  - PENTX
+  - LEICA_
+  - GR_
+  - SAM_
+  - GOPR
+  - GP_
+  - DJI_
+  - IMG-
+  - PXL_
+  - Screenshot_
+
+# STRUTTURA DIRECTORY RISULTANTE
+# ------------------------------
+# destination/
+# ├── PHOTO/YYYY/MM/          # Foto organizzate per anno/mese
+# ├── VIDEO/YYYY/MM/          # Video organizzati per anno/mese
+# ├── PHOTO_DUPLICATES/       # Duplicati foto
+# ├── VIDEO_DUPLICATES/       # Duplicati video
+# └── ToReview/               # File senza data riconoscibile
+#     ├── PHOTO/
+#     └── VIDEO/
+
+# ESEMPI DI UTILIZZO
+# ------------------
+# Esecuzione normale:
+#   python3 PhotoOrg.py
+#
+# Modalità dry-run (simulazione):
+#   python3 PhotoOrg.py --dry-run
+#
+# Reset completo dell'ambiente:
+#   python3 PhotoOrg.py --reset
+#
+# Help:
+#   python3 PhotoOrg.py --help
+
+# SICUREZZA E VALIDAZIONE
+# -----------------------
+# Il sistema verificherà automaticamente:
+# 1. Che source e destination non siano identici
+# 2. Che source non sia una sottodirectory di destination
+# 3. Che destination non sia una sottodirectory di source
+# 4. Che tutti i percorsi abbiano permessi adeguati
+# 5. Che le estensioni siano configurate correttamente
+
+# MODALITÀ DRY-RUN - DETTAGLI
+# ---------------------------
+# Perfetta per:
+# - Testare nuove configurazioni
+# - Verificare quanti file verrebbero processati
+# - Controllare la struttura directory risultante
+# - Identificare potenziali problemi prima dell'esecuzione
+# - Calcolare tempi di processing stimati
+# - Verificare il rilevamento duplicati
+#
+# In modalità dry-run vengono simulate:
+# - Creazione directory di destinazione
+# - Organizzazione file per anno/mese
+# - Rilevamento e gestione duplicati
+# - Calcolo delle statistiche finali
+# - Tracking database (in memoria)
+#
+# Non vengono effettuate:
+# - Copie reali dei file
+# - Creazione directory fisiche
+# - Modifiche al database permanente
+# - Scritture su disco oltre ai log
