@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Photo and Video Organizer with Parallel Processing - v1.2.0
+Photo and Video Organizer with Parallel Processing - v1.3.0 (con Modalità Merge)
 Organizza foto e video con processing parallelo multi-thread
 """
 
@@ -362,7 +362,7 @@ def initialize_file_processor(config: Dict[str, Any], db_manager: DatabaseManage
         max_workers = determine_worker_count(config)
         
         file_processor = FileProcessor(
-            config=config,  # <-- AGGIUNTA: Passa l'intero dizionario di configurazione
+            config=config,
             source_dir=config["source"],
             dest_dir=config["destination"],
             db_manager=db_manager,
@@ -481,13 +481,14 @@ def parse_arguments():
         argparse.Namespace: Argomenti parsati
     """
     parser = argparse.ArgumentParser(
-        description="Photo and Video Organizer con Processing Parallelo v1.2.0",
+        description="Photo and Video Organizer con Processing Parallelo v1.3.0",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Esempi di utilizzo:
-  python3 PhotoOrg.py              # Esegue l'organizzazione dei file
-  python3 PhotoOrg.py --dry-run    # Simula l'organizzazione senza modifiche
-  python3 PhotoOrg.py --reset      # Reset completo dell'ambiente
+  python3 PhotoOrg.py                     # Esegue l'organizzazione (modalità 'fresh' di default)
+  python3 PhotoOrg.py --mode merge        # Esegue in modalità merge su una destinazione esistente
+  python3 PhotoOrg.py --dry-run           # Simula l'organizzazione senza modifiche
+  python3 PhotoOrg.py --reset             # Reset completo dell'ambiente
   
 Per maggiori informazioni consulta README.md
         """
@@ -504,11 +505,19 @@ Per maggiori informazioni consulta README.md
         action="store_true",
         help="Modalità simulazione: analizza i file senza effettuare modifiche reali"
     )
+
+    # MODIFICA: Aggiunto nuovo argomento per la modalità di esecuzione
+    parser.add_argument(
+        "--mode",
+        choices=['fresh', 'merge'],
+        default='fresh',
+        help="Modalità di esecuzione: 'fresh' per destinazione vuota, 'merge' per destinazione esistente."
+    )
     
     parser.add_argument(
         "--version",
         action="version",
-        version="PhotoOrg v1.2.0"
+        version="PhotoOrg v1.3.0"
     )
     
     return parser.parse_args()
@@ -558,6 +567,9 @@ def main():
         print("[DRY-RUN] Modalità simulazione attivata - nessuna modifica reale sarà effettuata")
         logging.info("Modalità DRY-RUN attivata")
     
+    # MODIFICA: Stampa la modalità di esecuzione scelta
+    print(f"[INFO] Modalità di esecuzione: {args.mode.upper()}")
+    
     worker_count = determine_worker_count(config)
     
     print_system_info(config, worker_count, dry_run)
@@ -581,6 +593,14 @@ def main():
         logging.error("Impossibile procedere senza file processor")
         print("[ERROR] Errore critico: impossibile inizializzare il processore dei file.")
         return
+
+    # MODIFICA: Esegue la pre-scansione della destinazione se la modalità è 'merge'
+    if args.mode == 'merge':
+        if dry_run:
+            print("[DRY-RUN] In modalità merge, verrebbe eseguita la pre-scansione della destinazione.")
+            logging.info("DRY-RUN: Saltata pre-scansione della destinazione.")
+        else:
+            file_processor.pre_scan_destination()
     
     start_time = time.time()
     try:

@@ -121,6 +121,7 @@ supported_extensions:
 - .mpg
 - .mpeg
 video_extensions:
+- .m4v
 - .mp4
 - .mov
 - .avi
